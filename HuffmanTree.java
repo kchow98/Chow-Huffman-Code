@@ -3,14 +3,14 @@ My HuffmanTree Class
 
 How Huffman Code works:
 
-1)Take the string that is used to make the tree and create a map
-
-Create and fill a Map (see below) that keeps track of the number of occurrences of each letter
-Create a HuffmanNode for each letter and place it into a Priority Queue (the nodes with the highest priority should be the ones whose characters occur the fewest number of times)
-Take the first 2 nodes off the Priority Queue, make a new HuffmanNode with those 2 elements as children, and add the new HuffmanNode to the Priority Queue
-Repeat until the Priority Queue contains only one HuffmanNode
-Traverse through the HuffmanTree to find the code that represents your original phrase
-
+1)Take the string that is used to make the tree and create a map based on each character's
+occurrences
+2)Create a node for each character and put into a queue sorted from least to greatest
+3)Take the 2 smallest nodes off and make a new node combining the two, add back into the 
+queue
+4)Continue until queue has only 1 node left
+5)Using the Huffman built while messing with the nodes, create a code of the original
+string.
 
 @author Kevin Chow
 @version 1.29.16
