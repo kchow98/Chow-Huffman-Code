@@ -1,3 +1,5 @@
+import java.util.Map;
+import java.util.TreeMap;
 /**
 This is a my Huffman Runner.
 

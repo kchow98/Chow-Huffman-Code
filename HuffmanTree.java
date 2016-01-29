@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
 My HuffmanTree Class
 
@@ -11,6 +14,18 @@ queue
 4)Continue until queue has only 1 node left
 5)Using the Huffman built while messing with the nodes, create a code of the original
 string.
+
+Why I choose to use a TreeMap:
+Based on the api pages, Hashmap is the more efficient (a constant time for get, put) while 
+Treemaps are log(n). However, Treemaps maintain order while Hashmaps are more random or
+unorganized. For the sanity's sake while programming, it seems Treemaps are easier to work
+with.
+
+
+Note: I don't think I quite understand how we are to combine  HuffmanNode, HuffmanTree and
+TreeMap to do Huffman Code. I plan on seeing you asap next week.
+
+
 
 @author Kevin Chow
 @version 1.29.16

@@ -1,14 +1,9 @@
+import java.util.Map;
+import java.util.TreeMap;
 /**
-HuffmanNode: This HuffmanNode should behave like a normal TreeNode (e.g. have a left and
- right pointer), except that instead of containing an Object, it will contain both a 
- Character (named value) and an int (named count). Each should have an accessor and a 
- modifier. Since you will be placing these HuffmanNodes into a PriorityQueue, they will 
- also have to be Comparable. This comparison should be based on the value of the int. 
- If the value is the same, the comparison should return equal (0). 
- 
-
 This is a my HuffmanNode class. 
 
+I choose
 @author Kevin Chow
 @version 1.29.16
 */
