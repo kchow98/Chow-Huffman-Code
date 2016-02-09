@@ -61,6 +61,7 @@ public class RunnerHuffman
 		System.out.println("Testing Done");
 		*/
 		
+		//CHANGE THIS HERE 
 		String words = "Sally sells seashells";
 
 		ArrayList<String> letters = new ArrayList<String>();
