@@ -3,16 +3,16 @@ import java.util.TreeMap;
 /**
 This is a my HuffmanNode class. 
 
-I choose
+
 @author Kevin Chow
-@version 1.29.16
+@version 2.5.16
 */
-public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>>
+public class HuffmanNode implements Comparable<HuffmanNode>
 {
-	private Character value;
+	private String value;
 	private int count;
-	private HuffmanNode<Character> left;
-	private HuffmanNode<Character> right;
+	private HuffmanNode left;
+	private HuffmanNode right;
 	
 	/**
 	Default Constructor. Value, left, and right are all null, count is zero
@@ -27,10 +27,10 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 
 	/**
 	Set value equal to v and count equal to c, left and right are null
-	@param Character v the value of the node
-	@param int c number of occurrences  of the character
+	@param String v the value of the node
+	@param int c number of occurrences  of the String
 	*/
-	public HuffmanNode(Character v, int c)
+	public HuffmanNode(String v, int c)
 	{
 		value = v;
 		count = c;
@@ -40,11 +40,11 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 	
 	/**
 	Set value to v, count to c, left to l, right to r.
-	@param Character v the value of the Binary Tree
+	@param String v the value of the Binary Tree
 	@param BinaryTree<E> l the value of the left pointer
 	@param BinaryTree<E> r the value of the right pointer
 	*/
-	public HuffmanNode(Character v, int c, HuffmanNode<Character> l, HuffmanNode<Character> r)
+	public HuffmanNode(String v, int c, HuffmanNode l, HuffmanNode r)
 	{
 		value = v;
 		count = c;
@@ -54,9 +54,9 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 	
 	/**
 	Accessor method for the value
-	@return Character the value of the node
+	@return String the value of the node
 	*/
-	public Character value()
+	public String value()
 	{
 		return value;
 	}
@@ -72,27 +72,27 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 	
 	/**
 	Accessor method for left pointer.
-	@return HuffmanNode<Character> the node the left pointer points to.
+	@return HuffmanNode the node the left pointer points to.
 	*/
-	public HuffmanNode<Character> left()
+	public HuffmanNode left()
 	{
 		return left;
 	}
 	
 	/**
 	Accessor method for right pointer.
-	@return HuffmanNode<Character> the binary node the right pointer points to.
+	@return HuffmanNode the binary node the right pointer points to.
 	*/
-	public HuffmanNode<Character> right()
+	public HuffmanNode right()
 	{
 		return right;
 	}
 	
 	/**
 	Modifier for the value
-	@param Character val the value to set to
+	@param String val the value to set to
 	*/
-	public void setValue(Character val)
+	public void setValue(String val)
 	{
 		value = val;
 	}
@@ -108,18 +108,18 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 	
 	/**
 	Modifier for the left pointer
-	@param HuffmanNode<Character> node the new tree to point to
+	@param HuffmanNode node the new tree to point to
 	*/
-	public void setLeft(HuffmanNode<Character> node)
+	public void setLeft(HuffmanNode node)
 	{
 		left = node;
 	}
 	
 	/**
 	Modifier for the right pointer
-	@param HuffmanNode<Character> node the new tree to point to
+	@param HuffmanNode node the new tree to point to
 	*/
-	public void setRight(HuffmanNode<Character> node)
+	public void setRight(HuffmanNode node)
 	{
 		right = node;
 	}
@@ -130,22 +130,62 @@ public class HuffmanNode<Character> implements Comparable<HuffmanNode<Character>
 	*/
 	public String toString()
 	{
-		String s = "[";
-		s += "Value: "; 
-		s += value;
-		s += " - Count: "; 
-		s += count;
-		s += "]"; 
+		String s = "";
+		if(isLeaf() == true)
+		{
+			s += value;
+			return s;
+		}
+		else if(left == null)
+		{
+			s += value + "[";
+			s += "[_]";
+			s += "[";
+			s += right.toString();
+			s += "]";
+
+		}
+		else if(right == null)
+		{
+			s += value + "[";
+			s += "[";
+			s += left.toString();
+			s += "]";
+			s += "[_]";
+			s += "]";
+
+		}
+		
+		else
+		{
+			s += value;
+			s += "[";
+			s += left.toString();
+			s += "]";
+			s += "[";
+			s += right.toString();
+			s += "]";
+		
+		}
 		return s;
+	}
+	/**
+	Returns if the node is a leaf or not, which is when there are no children
+	@return boolean whether or not the node has any children
+	*/
+	public boolean isLeaf()
+	{
+			return (left == null && right == null);
+
 	}
 	
 	/**
 	Compares the node with another node for order. 
-	@param HuffmanNode<Character> other node that is to be compared to
+	@param HuffmanNode other node that is to be compared to
 	@return int Returns a negative integer, zero, or a positive integer as this object is 
 	less than, equal to, or greater than the specified object.
 	*/
-	public int compareTo(HuffmanNode<Character> other)
+	public int compareTo(HuffmanNode other)
 	{
 		return count - other.count();
 	}

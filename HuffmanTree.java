@@ -21,63 +21,35 @@ Treemaps are log(n). However, Treemaps maintain order while Hashmaps are more ra
 unorganized. For the sanity's sake while programming, it seems Treemaps are easier to work
 with.
 
-
-Note: I don't think I quite understand how we are to combine  HuffmanNode, HuffmanTree and
-TreeMap to do Huffman Code. I plan on seeing you asap next week.
-
-
-
 @author Kevin Chow
-@version 1.29.16
+@version 2.8.16
 */
 public class HuffmanTree
 {
-	private String value;
-	
-	private int count;
 	
 	//for root pointer
-	private HuffmanTree<String> root;
-	
-	private HuffmanTree<String> left;
-	private HuffmanTree<String> right;
+	private HuffmanNode root;	
 
 	//string value used to generate the tree
 	private String words;
 	
 	/**
-	Default constructor
-	*/
-	public HuffmanTree()
-	{
-	
-	}
-	
-	/**
 	Constructor takes in the string value for generating the tree.
 	@param String s the string value used to generate the tree
 	*/
-	public HuffmanTree(String s)
+	public HuffmanTree(String s, HuffmanNode r)
 	{
-		
+		root = r;
+		words = s;
 	}
 	
 	/**
 	Root accessor method
-	@return HuffmanTree<String> root node
+	@return HuffmanNode root node
 	*/
-	public HuffmanTree<String> root()
+	public HuffmanNode root()
 	{
-		
-	}
-	
-	/**
-	Modifier for root
-	@param HuffmanTree<String> the new root
-	*/
-	public void setRoot(HuffmanTree<String> r)
-	{
-	
+		return root;
 	}
 
 	/**
@@ -86,116 +58,87 @@ public class HuffmanTree
 	*/
 	public String words()
 	{
-	
+		return words;
 	}
-	
-	
-	
+
 	/**
-	Accessor method for the value
-	@return String the value of the node
+	Helper Method for Encode
+	@param String l letter to be encoded
+	@param HuffmanNode node to look at
+	@return String binary code of the letter
 	*/
-	public String value()
+	private String encodehelp(String l, HuffmanNode node)
 	{
-		return value;
-	}
+		if(node.isLeaf())
+		{
+			return "";
+		}
 	
-	/**
-	Accessor Method for the count
-	@return int the number of occurrences 
-	*/
-	public int count()
-	{
-		return count;
+		if(node.left().value().contains(l))
+		{
+			return "0" + encodehelp(l, node.left());
+		}
+		else if(node.right().value().contains(l));
+		{
+			return "1" + encodehelp(l, node.right());
+		}
 	}
-	
+
 	/**
-	Accessor method for left pointer.
-	@return HuffmanTree<String> the node the left pointer points to.
-	*/
-	public HuffmanTree<String> left()
-	{
-		return left;
-	}
-	
-	/**
-	Accessor method for right pointer.
-	@return HuffmanTree<String> the binary node the right pointer points to.
-	*/
-	public HuffmanTree<String> right()
-	{
-		return right;
-	}
-	
-	/**
-	Modifier for the value
-	@param Character val the value to set to
-	*/
-	public void setValue(Character val)
-	{
-		value = val;
-	}
-	
-	/**
-	Modifier for the count
-	@param int c the new count
-	*/
-	public void setCount(int c)
-	{
-		count = c;
-	}
-	
-	/**
-	Modifier for the left pointer
-	@param HuffmanTree<String> node the new tree to point to
-	*/
-	public void setLeft(HuffmanTree<String> node)
-	{
-		left = node;
-	}
-	
-	/**
-	Modifier for the right pointer
-	@param HuffmanTree<String> node the new tree to point to
-	*/
-	public void setRight(HuffmanTree<String> node)
-	{
-		right = node;
-	}
-	
-	/**
-	Returns if the node is a leaf or not, which is when there are no children
-	@return boolean whether or not the node has any children
-	*/
-	public boolean isLeaf()
-	{
-	}
-	
-	/**
-	Encoding method
+	Encoding Method
+	@param String words to encode
 	@return String the binary code for words
+	@precondition the characters being encoded are a part of the HuffmanNode tree
 	*/
-	public String encode()
+	public String encode(String words)
 	{
+		String code = "";
+		for(int i = 0;i < words.length();i++)
+		{
+			String letter = Character.toString(words.charAt(i));
+			code += encodehelp(letter, root);
+		}
+		return code;
 	}
 	
 	/**
 	Decode Method
+	@param String coded the code to decode
 	@return String the decoded message
 	*/
-	public String decode()
+	public String decode(String coded)
 	{
-	}
-	
-	/**
-	Creates a String Representation of the Huffman Tree
-	@return String string representation of the Huffman Tree
-	*/
-	public String toString()
-	{
-	}
-	
-	
-	
+		String decoded = "";
+		
+		int count = 0;
+		HuffmanNode temp = root;;
+		while (count < coded.length())
+		{
+			if (temp.isLeaf() == true)
+			{
+				decoded += temp.value();
+				temp = root;
+			}
+			
+			else if(coded.charAt(count) == '0')
+			{
+				temp = temp.left();
+				count++;
+			}
+			
+			else if(coded.charAt(count) == '1')
+			{
+				temp = temp.right();
+				count++;
+			}
+		}
+		
+		//because the final letter is not added in the while loop
+		decoded += temp.value();
 
+		return decoded;
+	}
+	
+	
+	
 }

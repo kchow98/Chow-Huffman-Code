@@ -1,24 +1,29 @@
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.PriorityQueue;
+import java.util.ArrayList;
+
 /**
 This is a my Huffman Runner.
 
 @author Kevin Chow
-@version 1.29.16
+@version 2.8.16
 */
 
 public class RunnerHuffman
 {
 	public static void main(String[] args)
 	{
+		/**
+		System.out.println("Node Testing:");
 		System.out.println("Testing Constructors and toString");
-		HuffmanNode<String> a = new HuffmanNode<String>();
+		HuffmanNode a = new HuffmanNode();
 		System.out.println(a);
-		HuffmanNode<String> b = new HuffmanNode<String>("b",3);
+		HuffmanNode b = new HuffmanNode("b",3);
 		System.out.println(b);
-		HuffmanNode<String> d = new HuffmanNode<String>("Y",5);
-		HuffmanNode<String> e = new HuffmanNode<String>("z",2);
-		HuffmanNode<String> c = new HuffmanNode<String>("c",6,d,e);
+		HuffmanNode d = new HuffmanNode("Y",5);
+		HuffmanNode e = new HuffmanNode("z",2);
+		HuffmanNode c = new HuffmanNode("c",6,d,e);
 		System.out.println(c);
 			
 		System.out.println("------------------------------------------");
@@ -53,7 +58,73 @@ public class RunnerHuffman
 
 
 		System.out.println("------------------------------------------");
-		
 		System.out.println("Testing Done");
+		*/
+		
+		String words = "Sally sells seashells";
+
+		ArrayList<String> letters = new ArrayList<String>();
+		
+		//make map
+		Map<String, Integer> occur = new TreeMap<String, Integer>();
+		for(int i = 0;i<words.length();i++)
+		{
+			String letter = Character.toString(words.charAt(i));
+			if(occur.containsKey(letter))
+			{
+				int freq = occur.get(letter);
+				freq++;
+				occur.remove(letter);
+				occur.put(letter,freq);
+			}
+			else
+			{
+				//magic number one because it is the first occurrence of that letter
+				occur.put(letter,1);
+				letters.add(letter);
+			}
+			
+		}
+		
+		PriorityQueue<HuffmanNode> queue = new PriorityQueue<HuffmanNode>();
+
+		//make all the key,values into nodes
+		for(int i = 0; i < letters.size(); i++)
+		{
+			HuffmanNode node = new HuffmanNode(letters.get(i),occur.get(letters.get(i)));
+			queue.add(node);
+		}
+		
+		/**
+		Test Print out of queue
+		String print = "";
+		while(queue.isEmpty() == false)
+		{
+			print += queue.poll();
+		}
+		
+		System.out.println(print);
+		*/
+
+		//take first 2 off and add as one node, until one node left
+		while(queue.size() > 1)
+		{
+			HuffmanNode node1 = queue.poll();
+			HuffmanNode node2 = queue.poll();
+			
+			HuffmanNode nodecombine = new HuffmanNode(node1.value()+node2.value(),node1.count()+node2.count(),node1,node2);
+			queue.add(nodecombine);
+		}
+
+		HuffmanNode root = queue.poll();
+		HuffmanTree tree = new HuffmanTree(words,root);
+
+		System.out.println(tree.encode("yesh"));
+		System.out.println(tree.decode("0011100011010"));
 	}
 }
+
+/**
+		// Map Works System.out.println(occur);
+
+*/
